@@ -1,0 +1,227 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "daoAddr",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      }
+    ],
+    "name": "FlexDaoCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "daoAddr",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      }
+    ],
+    "name": "VintageDaoCreated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address[]",
+            "name": "daoFactoriesAddress",
+            "type": "address[]"
+          },
+          { "internalType": "string", "name": "name", "type": "string" },
+          { "internalType": "address", "name": "creator", "type": "address" },
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "id", "type": "bytes32" },
+              { "internalType": "address", "name": "addr", "type": "address" },
+              { "internalType": "uint128", "name": "flags", "type": "uint128" }
+            ],
+            "internalType": "struct DaoFactory.Adapter[]",
+            "name": "enalbeAdapters",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "id", "type": "bytes32" },
+              { "internalType": "address", "name": "addr", "type": "address" },
+              { "internalType": "uint128", "name": "flags", "type": "uint128" }
+            ],
+            "internalType": "struct DaoFactory.Adapter[]",
+            "name": "adapters1",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "_uint256Args",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "address[]",
+            "name": "_addressArgs",
+            "type": "address[]"
+          }
+        ],
+        "internalType": "struct SummonDao.FlexDaoParams",
+        "name": "params",
+        "type": "tuple"
+      }
+    ],
+    "name": "summonFlexDao",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address[]",
+            "name": "daoFactoriesAddress",
+            "type": "address[]"
+          },
+          { "internalType": "string", "name": "name", "type": "string" },
+          { "internalType": "address", "name": "creator", "type": "address" },
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "id", "type": "bytes32" },
+              { "internalType": "address", "name": "addr", "type": "address" },
+              { "internalType": "uint128", "name": "flags", "type": "uint128" }
+            ],
+            "internalType": "struct DaoFactory.Adapter[]",
+            "name": "enalbeAdapters",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "id", "type": "bytes32" },
+              { "internalType": "address", "name": "addr", "type": "address" },
+              { "internalType": "uint128", "name": "flags", "type": "uint128" }
+            ],
+            "internalType": "struct DaoFactory.Adapter[]",
+            "name": "adapters1",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "id", "type": "bytes32" },
+              { "internalType": "address", "name": "addr", "type": "address" },
+              { "internalType": "uint128", "name": "flags", "type": "uint128" }
+            ],
+            "internalType": "struct DaoFactory.Adapter[]",
+            "name": "adapters2",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "votingPeriod",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint8",
+                "name": "votingPower",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint256",
+                "name": "superMajority",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "quorum",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "proposalExecutePeriod",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SummonDao.VintageDaoVotingInfo",
+            "name": "votingInfo",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              { "internalType": "bool", "name": "enable", "type": "bool" },
+              {
+                "internalType": "uint8",
+                "name": "validateType",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint256",
+                "name": "minHolding",
+                "type": "uint256"
+              },
+              {
+                "internalType": "address",
+                "name": "tokenAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+              },
+              {
+                "internalType": "address[]",
+                "name": "whiteLists",
+                "type": "address[]"
+              }
+            ],
+            "internalType": "struct SummonDao.VintageMembershipInfo",
+            "name": "membershipInfo",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              { "internalType": "bool", "name": "enable", "type": "bool" },
+              {
+                "internalType": "uint256",
+                "name": "maxParticipants",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SummonDao.VintageParticipantCapInfo",
+            "name": "participantCapInfo",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address[]",
+            "name": "raisers",
+            "type": "address[]"
+          }
+        ],
+        "internalType": "struct SummonDao.VintageDaoParams",
+        "name": "params",
+        "type": "tuple"
+      }
+    ],
+    "name": "summonVintageDao",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
