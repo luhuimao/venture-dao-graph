@@ -1,4 +1,4 @@
-specVersion: 0.0.1
+specVersion: 0.0.4
 schema:
   file: ./schema.graphql
 dataSources:
@@ -6,11 +6,11 @@ dataSources:
     name: SummonDao
     network: goerli
     source:
-      address: "0xe6F5F4f71364d4D521b5Cf40E03c77098DFbCeb0"
+      address: "0xab6CD39e23065cF9a78de1DAb170C80321DcDA51"
       abi: SummonDao
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - FlexDaoCreated
@@ -19,8 +19,240 @@ dataSources:
         - name: SummonDao
           file: ./abis/SummonDao.json
       eventHandlers:
-        - event: FlexDaoCreated(address,address)
+        - event: FlexDaoCreated(address,address,string,address)
           handler: handleFlexDaoCreated
-        - event: VintageDaoCreated(address,address)
+        - event: VintageDaoCreated(address,address,string,address)
           handler: handleVintageDaoCreated
       file: ./src/summon-dao.ts
+  - kind: ethereum
+    name: FuroVesting
+    network: goerli
+    source:
+      address: "0x9074DA8642FE0753B358a1898A957B93e45aE450"
+      abi: FuroVesting
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CancelVesting
+        - CreateVesting
+        - LogUpdateOwner
+        - OwnershipTransferred
+        - Withdraw
+      abis:
+        - name: FuroVesting
+          file: ./abis/FuroVesting.json
+      eventHandlers:
+        - event: CancelVesting(indexed uint256,indexed uint256,indexed uint256,address,bool)
+          handler: handleCancelVesting
+        - event: CreateVesting(indexed uint256,address,indexed
+            address,uint32,uint32,uint32,uint32,uint128,uint128,bytes32)
+          handler: handleCreateVesting
+        - event: LogUpdateOwner(indexed uint256,indexed address)
+          handler: handleLogUpdateOwner
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Withdraw(indexed uint256,indexed address,indexed uint256,bool)
+          handler: handleWithdraw
+      file: ./src/furo-vesting.ts
+  - kind: ethereum
+    name: DistributeFundContractV2
+    network: goerli
+    source:
+      address: "0xeD550E8aB6Eca75FFcDb4E2D08db1672de2AAa50"
+      abi: DistributeFundContractV2
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ProposalCreated
+        - ProposalExecuted
+      abis:
+        - name: DistributeFundContractV2
+          file: ./abis/DistributeFundContractV2.json
+      eventHandlers:
+        - event:  ProposalCreated(address,bytes32)
+          handler: handleProposalCreated
+        - event:  ProposalExecuted(address,bytes32,uint256,uint128,uint128,uint128,uint256)
+          handler: handleProposalExecuted
+        - event: StartVote(address,bytes32,uint256,uint256,uint8)
+          handler: handleStartVote
+      file: ./src/distribute-fund-contract-v-2.ts
+  - kind: ethereum
+    name: AllocationAdapterContractV2
+    network: goerli
+    source:
+      address: "0x4c4B5BBb3b37423D8DB0320f50F3900FAf3029D8"
+      abi: AllocationAdapterContractV2
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - AllocateToken
+        - ConfigureDao
+      abis:
+        - name: AllocationAdapterContractV2
+          file: ./abis/AllocationAdapterContractV2.json
+      eventHandlers:
+        - event: AllocateToken(address,bytes32,address,address[])
+          handler: handleAllocateToken
+        - event: ConfigureDao(uint256,uint256)
+          handler: handleConfigureDao
+      file: ./src/allocation-adapter-contract-v-2.ts
+  - kind: ethereum
+    name: FundRaiseAdapterContract
+    network: goerli
+    source:
+      address: "0xA48981f1c45b3366bAFe15d51fdf72fA2d381D50"
+      abi: FundRaiseAdapterContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ProposalCreated
+        - proposalExecuted
+      abis:
+        - name: FundRaiseAdapterContract
+          file: ./abis/FundRaiseAdapterContract.json
+      eventHandlers:
+        - event: ProposalCreated(address,bytes32)
+          handler: handleProposalCreated
+        - event: proposalExecuted(address,bytes32,uint8)
+          handler: handleproposalExecuted
+      file: ./src/fund-raise-adapter-contract.ts
+  - kind: ethereum
+    name: FlexFundingAdapterContract
+    network: goerli
+    source:
+      address: "0xade2D6CA47D63faCE468Ae298a2cAD823aA41894"
+      abi: FlexFundingAdapterContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ProposalCreated
+        - ProposalExecuted
+      abis:
+        - name: FlexFundingAdapterContract
+          file: ./abis/FlexFundingAdapterContract.json
+      eventHandlers:
+        - event:  ProposalCreated(address,bytes32,address)
+          handler: handleProposalCreated
+        - event: ProposalExecuted(address,bytes32,uint8)
+          handler: handleproposalExecuted
+      file: ./src/flex-funding-adapter-contract.ts
+  - kind: ethereum
+    name: FlexVesting
+    network: goerli
+    source:
+      address: "0x5B2dE848f82638716C9aEf173279F5b54C8aD471"
+      abi: FlexVesting
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CreateVesting
+        - Withdraw
+      abis:
+        - name: FlexVesting
+          file: ./abis/FlexVesting.json
+      eventHandlers:
+        - event:  CreateVesting(indexed uint256,address,indexed address,uint32,uint32,uint32,uint32,uint128,uint128,bytes32)
+          handler: handleCreateVesting
+        - event: Withdraw(indexed uint256,indexed address,indexed uint256,bool)
+          handler: handleWithdraw
+      file: ./src/flex-vesting-contract.ts
+  - kind: ethereum
+    name: GPVotingContract
+    network: goerli
+    source:
+      address: "0x96A8681D4699bCd6bFF3C9C61DBeb6AAB642Ff7C"
+      abi: GPVotingContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CreateVesting
+        - Withdraw
+      abis:
+        - name: GPVotingContract
+          file: ./abis/GPVotingContract.json
+      eventHandlers:
+        - event:  SubmitVote(address,bytes32,uint256,address,uint256,uint128,uint128,uint128)
+          handler: handleSubmitVote
+        - event: StartNewVotingForProposal(address,bytes32,uint256,uint256)
+          handler: handleStartNewVotingForProposal
+      file: ./src/gpvoting.ts
+  - kind: ethereum
+    name: GPDaoOnboardingAdapterContract
+    network: goerli
+    source:
+      address: "0x717cbE5a002164298ece492502f744a9C96dD039"
+      abi: GPDaoOnboardingAdapterContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CreateVesting
+        - Withdraw
+      abis:
+        - name: GPDaoOnboardingAdapterContract
+          file: ./abis/GPDaoOnboardingAdapterContract.json
+      eventHandlers:
+        - event:  ProposalCreated(address,bytes32,address,uint256,uint256)
+          handler: handleProposalCreated
+        - event:  ProposalProcessed(address,bytes32,uint8,uint8,uint128,uint128,uint128)
+          handler: handleProposalProcessed
+      file: ./src/raiser-in.ts
+  - kind: ethereum
+    name: GPKickAdapterContract
+    network: goerli
+    source:
+      address: "0xB3AE32e66EF0e5f13A5EDaeec2fE2681599daddd"
+      abi: GPKickAdapterContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CreateVesting
+        - Withdraw
+      abis:
+        - name: GPKickAdapterContract
+          file: ./abis/GPKickAdapterContract.json
+      eventHandlers:
+        - event:  ProposalCreated(address,bytes32,address,uint256,uint256)
+          handler: handleProposalCreated
+        - event:  ProposalProcessed(address,bytes32,uint8,uint8,uint128,uint128,uint128)
+          handler: handleProposalProcessed
+      file: ./src/raiser-out.ts
+  - kind: ethereum
+    name: DaoFactory
+    network: goerli
+    source:
+      address: "0xC213d9093e37Aae1A7Ee1502bfa6eaE7809223B6"
+      abi: DaoFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CreateVesting
+        - Withdraw
+      abis:
+        - name: DaoFactory
+          file: ./abis/DaoFactory.json
+      eventHandlers:
+        - event:  DAOCreated(address,address,string)
+          handler: handleDaoCreated
+        - event:  OwnerChanged(address,address)
+          handler: handleOwnerChanged
+      file: ./src/dao-factory.ts
