@@ -4,7 +4,7 @@
  * @Author: huhuimao
  * @Date: 2023-01-05 19:50:32
  * @LastEditors: huhuimao
- * @LastEditTime: 2023-02-08 15:24:47
+ * @LastEditTime: 2023-03-01 09:28:08
  */
 import { BigInt } from "@graphprotocol/graph-ts"
 import {
@@ -27,7 +27,10 @@ export function handleDaoCreated(event: DAOCreated): void {
         entity.creator = event.params._creator;
         entity.daoType = "unknow";
         entity.createTimeStamp = event.block.timestamp;
-        entity.createDateTime = new Date(event.block.timestamp.toI64() * 1000).toISOString();
+        // entity.createDateTime = new Date(event.block.timestamp.toI64() * 1000).toISOString();
+        entity.createDateTime = new Date(event.block.timestamp.toI64() * 1000).
+            toString();
+
     }
     else {
         entity.daoName = event.params._name;

@@ -192,3 +192,18 @@ type VintageRiaserOutProposal @entity{
   state: BigInt! # uint256
   stateInString: String!
 }
+
+type FlexStewardMangementProposal @entity{
+  id: ID!
+  daoAddr: Bytes! # address
+  proposalId: Bytes!
+  stewardAddress: Bytes! # address
+  creationTime: BigInt! # uint256
+  createTimeString: String!
+  stopVoteTime: BigInt! # uint256
+  stopVoteTimeString: String!
+  state: BigInt! # uint256
+  stateInString: String!
+  type: BigInt! # uint256
+  typeInString: String!
+}

@@ -4,7 +4,7 @@
  * @Author: huhuimao
  * @Date: 2022-11-22 15:32:03
  * @LastEditors: huhuimao
- * @LastEditTime: 2023-01-17 13:48:28
+ * @LastEditTime: 2023-03-01 18:48:26
  */
 import { BigInt, Bytes, Address } from "@graphprotocol/graph-ts"
 import {
@@ -17,12 +17,12 @@ import { FlexFundingProposal } from "../generated/schema"
 export function handleProposalCreated(event: ProposalCreated): void {
     // Entities can be loaded from the store using a string ID; this ID
     // needs to be unique across all entities of the same type
-    let entity = FlexFundingProposal.load(event.params.proposalId.toHex())
+    let entity = FlexFundingProposal.load(event.params.proposalId.toString())
 
     // Entities only exist after they have been saved to the store;
     // `null` checks allow to create entities on demand
     if (!entity) {
-        entity = new FlexFundingProposal(event.params.proposalId.toHex())
+        entity = new FlexFundingProposal(event.params.proposalId.toString())
     }
 
     // BigInt and BigDecimal math are supported
@@ -103,7 +103,7 @@ export function handleProposalCreated(event: ProposalCreated): void {
 }
 
 export function handleproposalExecuted(event: ProposalExecuted): void {
-    let entity = FlexFundingProposal.load(event.params.proposalId.toHex())
+    let entity = FlexFundingProposal.load(event.params.proposalId.toString())
 
     // Entities only exist after they have been saved to the store;
     // `null` checks allow to create entities on demand
