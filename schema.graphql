@@ -111,13 +111,15 @@ type FlexFundingProposal @entity{
   approverAddr: Bytes! # address
   recipientAddr: Bytes! # address
   vestingStartTime: BigInt! # uint256
-  vestingCliffDuration: BigInt! # uint256
-  vestingStepDuration: BigInt! # uint256
-  vestingSteps: BigInt! # uint256
+  vestingCliffEndTime: BigInt! # uint256
+  vestingEndTime: BigInt! # uint256
   vestingCliffLockAmount: BigInt! # uint256
+  vestingInterval:BigInt! # uint256
   fundRaiseType: BigInt! # uint256
   fundRaiseStartTime: BigInt! # uint256
   fundRaiseEndTime: BigInt! # uint256
+  fundRaiseStartTimeString: String!
+  fundRaiseEndTimeString: String!
   minDepositAmount: BigInt! # uint256
   maxDepositAmount: BigInt! # uint256
   backerIdentification: Boolean!
@@ -140,6 +142,10 @@ type FlexFundingProposal @entity{
   stopVoteTime: BigInt! # uint256
   state: BigInt! # uint256
   createDateTime: String!
+  stopVoteTimeString: String!
+  totalFund: BigInt! # uint256
+  totalFundFromWei: String!
+  investors: [String!]! # address[]
 }
 
 type FlexVestEntity @entity {
@@ -149,6 +155,9 @@ type FlexVestEntity @entity {
   proposalId: Bytes! 
   tokenAddress: Bytes! # address
   startTime: BigInt! # uint256
+  startTimeString:  String!
+  cliffEndTimeString: String!
+  vestEndTimeString: String!
   cliffDuration: BigInt! # uint256
   stepDuration: BigInt! # uint256
   steps: BigInt! # uint256
@@ -206,4 +215,80 @@ type FlexStewardMangementProposal @entity{
   stateInString: String!
   type: BigInt! # uint256
   typeInString: String!
+}
+
+type FlexPollVoting @entity{
+  id: ID!
+  txHash:Bytes! # address
+  daoAddr: Bytes! # address
+  proposalId: Bytes! # address
+  votedTimeStamp: BigInt! # uint256
+  votedDateTimeString: String
+  voter: Bytes! # address
+  voteValue: BigInt! # uint256
+}
+
+type FlexVoting @entity{
+  id: ID!
+  txHash:Bytes! # address
+  daoAddr: Bytes! # address
+  proposalId: Bytes! # address
+  votedTimeStamp: BigInt! # uint256
+  votedDateTimeString: String!
+  voter: Bytes! # address
+  voteValue: BigInt! # uint256
+}
+
+type FlexProposalVoteInfo @entity{
+  id:ID!
+  daoAddr: Bytes! # address
+  proposalId: Bytes! # address
+  startVoteTime: BigInt! # uint256
+  stopVoteTime: BigInt! # uint256
+  startVoteTimeString: String!
+  stopVoteTimeString: String!
+  nbYes: BigInt! # uint256
+  nbNo: BigInt! # uint256
+}
+
+type InvestorBalance @entity{
+  id:ID!
+  daoAddr: Bytes! # address
+  account:  Bytes! # address
+  proposalId: Bytes! # address
+  balance: BigInt! # uint256
+  balanceFromWei: String!
+}
+
+type InvestorAtivity @entity{
+  id:ID!
+  txHash:Bytes! 
+  daoAddr: Bytes! # address
+  proposalId: Bytes! # address
+  account:  Bytes! # address
+  type: String!
+  amount: BigInt! # uint256
+  amountFromWei: String!
+  timeStamp: BigInt! # uint256
+  timeString: String!
+}
+
+type FlexVestingEligibleUsers @entity {
+  id: ID!
+  proposalId: Bytes! # bytes32
+  proposer: Bytes! # address
+  lps: [Bytes!]! # address[]
+}
+
+type FlexUserVestInfo @entity{
+  id: ID!
+  daoAddr: Bytes! # address
+  fundingProposalId: Bytes! # bytes32
+  recipient: Bytes! # address
+  vestingStartTime: BigInt! # uint256
+  vestingCliffEndTime: BigInt! # uint256
+  vestingInterval: BigInt! # uint256
+  vestingEndTime: BigInt! # uint256
+  totalAmount: BigInt! # uint256
+  created: Boolean!
 }

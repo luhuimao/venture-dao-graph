@@ -128,7 +128,7 @@ dataSources:
     name: FlexFundingAdapterContract
     network: goerli
     source:
-      address: "0x7d79Dc1E9d7f170697D39c2004b527BfD958760D"
+      address: "0xF08e9f7F821Af8AF9f9E3e9b8b484F2EB5bDE4A8"
       abi: FlexFundingAdapterContract
     mapping:
       kind: ethereum/events
@@ -150,7 +150,7 @@ dataSources:
     name: FlexVesting
     network: goerli
     source:
-      address: "0x5A08FbF600862249b2e8DDD6dee069C507527e7b"
+      address: "0x5eA8274048fbbCd27bDf1DfF4841Af611f430e1b"
       abi: FlexVesting
     mapping:
       kind: ethereum/events
@@ -238,7 +238,7 @@ dataSources:
     name: DaoFactory
     network: goerli
     source:
-      address: "0xC213d9093e37Aae1A7Ee1502bfa6eaE7809223B6"
+      address: "0x70050Ae33Ab726bd3Ad89c49532e127ba14E67de"
       abi: DaoFactory
     mapping:
       kind: ethereum/events
@@ -260,7 +260,7 @@ dataSources:
     name: StewardManagementContract
     network: goerli
     source:
-      address: "0x6B93AAD680B156D68F90aC62e61058728f071716"
+      address: "0x2095ffd55D14D7F0937948f91457bf8A0f30E4e0"
       abi: StewardManagementContract
     mapping:
       kind: ethereum/events
@@ -277,3 +277,87 @@ dataSources:
         - event:  ProposalProcessed(address,bytes32,uint8)
           handler: handleProposalProcessed
       file: ./src/flex-steward-management.ts
+  - kind: ethereum
+    name: FlexPollingVotingContract
+    network: goerli
+    source:
+      address: "0x543cD1dAEA2CE48E90aA1De170D482fCBC172eDd"
+      abi: FlexPollingVotingContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - FlexPollVoting
+        - FlexProposalVoteInfo
+      abis:
+        - name: FlexPollingVotingContract
+          file: ./abis/FlexPollingVotingContract.json
+      eventHandlers:
+        - event: SubmitVote(address,bytes32,uint256,uint256,uint256,address,uint256,uint256,uint256)
+          handler: handleSubmitVote
+      file: ./src/flex-poll-voting.ts
+  - kind: ethereum
+    name: FlexVotingContract
+    network: goerli
+    source:
+      address: "0xE1D5C9aDE12ea31Cd2C09f1D55213F6c5AF364fD"
+      abi: FlexVotingContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - FlexVoting
+        - FlexProposalVoteInfo
+      abis:
+        - name: FlexVotingContract
+          file: ./abis/FlexVotingContract.json
+      eventHandlers:
+        - event: SubmitVote(address,bytes32,uint256,uint256,uint256,address,uint256,uint256,uint256)
+          handler: handleSubmitVote
+      file: ./src/flex-voting.ts
+  - kind: ethereum
+    name: FlexFundingPoolAdapterContract
+    network: goerli
+    source:
+      address: "0xf73aC3dea5137BD2a7e7c13fe0Be3e110e4D5B0B"
+      abi: FlexFundingPoolAdapterContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - FlexVoting
+        - FlexProposalVoteInfo
+      abis:
+        - name: FlexFundingPoolAdapterContract
+          file: ./abis/FlexFundingPoolAdapterContract.json
+      eventHandlers:
+        - event: Deposit(address,bytes32,uint256,address)
+          handler: handleDeposit
+        - event: WithDraw(address,bytes32,uint256,address)
+          handler: handleWithDraw
+      file: ./src/flex-funding-pool.ts
+  - kind: ethereum
+    name: FlexAllocationAdapterContract
+    network: goerli
+    source:
+      address: "0x0276Bd6C4D6bd20ee9D4210D1Cc0076B628b15B1"
+      abi: FlexAllocationAdapterContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - AllocateToken
+        - ConfigureDao
+      abis:
+        - name: FlexAllocationAdapterContract
+          file: ./abis/FlexAllocationAdapterContract.json
+      eventHandlers:
+        - event: AllocateToken(bytes32,address,address,address[])
+          handler: handleAllocateToken
+        - event: ConfigureDao(uint256,uint256)
+          handler: handleConfigureDao
+      file: ./src/flex-alloc.ts

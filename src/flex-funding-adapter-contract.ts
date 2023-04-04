@@ -4,7 +4,7 @@
  * @Author: huhuimao
  * @Date: 2022-11-22 15:32:03
  * @LastEditors: huhuimao
- * @LastEditTime: 2023-03-01 18:48:26
+ * @LastEditTime: 2023-03-10 23:22:45
  */
 import { BigInt, Bytes, Address } from "@graphprotocol/graph-ts"
 import {
@@ -47,13 +47,15 @@ export function handleProposalCreated(event: ProposalCreated): void {
     entity.approverAddr = proposalInfo.getFundingInfo().approverAddr;
     entity.recipientAddr = proposalInfo.getFundingInfo().tokenAddress;
     entity.vestingStartTime = proposalInfo.getVestInfo().vestingStartTime;
-    entity.vestingCliffDuration = proposalInfo.getVestInfo().vestingCliffDuration;
-    entity.vestingStepDuration = proposalInfo.getVestInfo().vestingStepDuration;
-    entity.vestingSteps = proposalInfo.getVestInfo().vestingSteps;
+    entity.vestingCliffEndTime = proposalInfo.getVestInfo().vestingCliffEndTime;
+    entity.vestingEndTime = proposalInfo.getVestInfo().vestingEndTime;
+    entity.vestingInterval = proposalInfo.getVestInfo().vestingInterval;
     entity.vestingCliffLockAmount = proposalInfo.getVestInfo().vestingCliffLockAmount;
     entity.fundRaiseType = BigInt.fromI32(proposalInfo.getFundRaiseInfo().fundRaiseType);
     entity.fundRaiseStartTime = proposalInfo.getFundRaiseInfo().fundRaiseStartTime;
     entity.fundRaiseEndTime = proposalInfo.getFundRaiseInfo().fundRaiseEndTime;
+    entity.fundRaiseStartTimeString = new Date(entity.fundRaiseStartTime.toI64() * 1000).toISOString();
+    entity.fundRaiseEndTimeString = new Date(entity.fundRaiseEndTime.toI64() * 1000).toISOString();
     entity.minDepositAmount = proposalInfo.getFundRaiseInfo().minDepositAmount;
     entity.maxDepositAmount = proposalInfo.getFundRaiseInfo().maxDepositAmount;
     entity.backerIdentification = proposalInfo.getFundRaiseInfo().backerIdentification;
@@ -76,6 +78,10 @@ export function handleProposalCreated(event: ProposalCreated): void {
     entity.stopVoteTime = proposalInfo.getStopVoteTime();
     entity.state = BigInt.fromI32(proposalInfo.getState());
     entity.createDateTime = new Date(event.block.timestamp.toI64() * 1000).toISOString();
+    entity.stopVoteTimeString = new Date(proposalInfo.getStopVoteTime().toI64() * 1000).toISOString();
+    entity.totalFund = BigInt.fromI32(0);
+    entity.totalFundFromWei = "0";
+    entity.investors = [];
     // Entities can be written to the store with `.save()`
     entity.save()
 
